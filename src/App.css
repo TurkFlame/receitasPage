@@ -1,38 +1,141 @@
-.App {
-  text-align: center;
+* {
+    margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav {
+    width: 100vw;
+    /* Define a largura da navegação em relação à largura da tela */
+    height: 6.1875rem;
+    flex-shrink: 0;
+    position: relative;
+    background: #090A35;
+    background-image: url("/assets/header/4f1cf0a91fdee088f1d0ca9284181252.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: 1rem solid #FF006B;
+    ;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+nav img {
+    position: relative;
+    top: -0.4rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.carousel-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    position: relative;
+    align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.carousel-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.larger-image {
+    width: 400px;
+    border-radius: 10px;
+    height: auto;
+}
+
+.smaller-image {
+    border-radius: 15px;
+    width: 250px;
+    height: auto;
+    filter: blur(3px);
+}
+
+.carousel-caption h3 {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+.carrouselElements {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipeList ul {
+    position: relative;
+    list-style: none;
+}
+
+.smaller-image+.carousel-caption h3 {
+    color: #fff;
+    padding: 5px;
+}
+
+.navbar i {
+    color: rgba(7, 8, 47, 0.65);
+    transition: all 0.6;
+}
+
+.navbar i:hover {
+    color: white;
+}
+
+.navbar {
+    background: #FF006B;
+    width: 30%;
+    border-radius: 10px;
+    height: 100%;
+    position: relative;
+    right: -25%;
+    top: 65%;
+    font-size: xxx-large;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+
+}
+
+.carrouselElements {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    right: 24%;
+}
+
+
+.recipeList {
+    background: #090A35;
+    position: absolute;
+    top: 90%;
+    right: 45%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+}
+.recipeList h2{
+    color: white;
+}
+
+.recipeList ul li{
+    list-style: none;
+    
+    color: white;
+    list-style-type:decimal;
 }
