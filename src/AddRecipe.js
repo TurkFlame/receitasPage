@@ -35,7 +35,7 @@ function AddRecipe({ onAddRecipe }) {
   return (
     <div>
       <h2>Adicionar Nova Receita</h2>
-      <form onSubmit={handleSubmit}>
+      <form style={{'display': 'flex','align-items': 'center', 'margin':'auto', 'width':'fit-content'}} onSubmit={handleSubmit}>
         <label>Título:</label>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
         <label>Ingredientes:</label>
@@ -43,7 +43,7 @@ function AddRecipe({ onAddRecipe }) {
         <label>Modo de Preparo:</label>
         <textarea value={preparation} onChange={(e) => setPreparation(e.target.value)} />
         <label>URL da Imagem:</label>
-        <textarea value={preparation} onChange={(e) => setUrl(e.target.value)} />
+        <textarea value={url} onChange={(e) => setUrl(e.target.value)} />
         <button type="submit">Adicionar Receita</button>
       </form>
     </div>

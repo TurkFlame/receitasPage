@@ -99,8 +99,9 @@ body {
     width: 30%;
     border-radius: 10px;
     height: 100%;
-    position: relative;
-    right: -25%;
+    position: absolute;
+    transform:translateX(-50%);
+    left: 50%;
     top: 65%;
     font-size: xxx-large;
     z-index: 1;
@@ -114,7 +115,8 @@ body {
     align-items: center;
     position: absolute;
     top: 40%;
-    right: 24%;
+    transform:translateX(-50%);
+    left: 50%;
 }
 
 
@@ -122,11 +124,9 @@ body {
     background: #090A35;
     position: absolute;
     top: 90%;
-    right: 45%;
+    transform:translateX(-50%);
+    left: 50%;
     display: flex;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
     flex-direction: column;
 }
 .recipeList h2{
