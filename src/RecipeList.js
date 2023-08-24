@@ -15,12 +15,12 @@ function RecipeList() {
   }, []);
 
   return (
-    <div className="recipeList">
+    <div className="recipeList" justify="end">
       <h2><strong>Lista</strong> de Receitas</h2>
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+            <Link to={`/recipe/${recipe.id}`} style={{ color: 'white' }}>{recipe.title}</Link>
           </li>
         ))}
       </ul>

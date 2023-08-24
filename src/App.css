@@ -2,25 +2,6 @@
     margin: 0;
 }
 
-nav {
-    width: 100vw;
-    /* Define a largura da navegação em relação à largura da tela */
-    height: 6.1875rem;
-    flex-shrink: 0;
-    position: relative;
-    background: #090A35;
-    background-image: url("/assets/header/4f1cf0a91fdee088f1d0ca9284181252.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-bottom: 1rem solid #FF006B;
-    ;
-}
-
-nav img {
-    position: relative;
-    top: -0.4rem;
-}
 
 body {
     height: 100%;
@@ -38,6 +19,8 @@ body {
     gap: 20px;
     position: relative;
     align-items: center;
+    /* margin-top: 0; (Ajuste de acordo com suas necessidades) */
+    transition: margin-top 0.3s ease-in-out;
 }
 
 .carousel-container img {
@@ -48,13 +31,13 @@ body {
 .larger-image {
     width: 400px;
     border-radius: 10px;
-    height: auto;
+    height: 266px;
 }
 
 .smaller-image {
     border-radius: 15px;
     width: 250px;
-    height: auto;
+    height: 180px;
     filter: blur(3px);
 }
 
@@ -69,25 +52,33 @@ body {
     left: 0;
 }
 
-.carrouselElements {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-}
-
 .recipeList ul {
     position: relative;
     list-style: none;
 }
 
-.smaller-image+.carousel-caption h3 {
+.smaller-image + .carousel-caption h3 {
     color: #fff;
     padding: 5px;
 }
 
+nav {
+    width: 100vw;
+    height: 6.1875rem;
+    position: relative;
+    background: #090A35 url("/assets/header/4f1cf0a91fdee088f1d0ca9284181252.png") no-repeat center;
+    background-size: cover;
+    border-bottom: 1rem solid #FF006B;
+}
+
+nav img {
+    position: relative;
+    top: -0.4rem;
+}
+
 .navbar i {
     color: rgba(7, 8, 47, 0.65);
-    transition: all 0.6;
+    transition: all 0.6s;
 }
 
 .navbar i:hover {
@@ -100,42 +91,128 @@ body {
     border-radius: 10px;
     height: 100%;
     position: absolute;
-    transform:translateX(-50%);
+    transform: translateX(-50%);
     left: 50%;
     top: 65%;
     font-size: xxx-large;
     z-index: 1;
-    display: flex;
-    align-items: center;
-
 }
 
 .carrouselElements {
     display: flex;
     align-items: center;
     position: absolute;
-    top: 40%;
-    transform:translateX(-50%);
+    top: 20%;
+    transform: translateX(-50%);
     left: 50%;
-}
-
-
-.recipeList {
-    background: #090A35;
-    position: absolute;
-    top: 90%;
-    transform:translateX(-50%);
-    left: 50%;
-    display: flex;
+    text-align: center;
     flex-direction: column;
 }
-.recipeList h2{
-    color: white;
+
+.recipeList {
+    position: absolute;
+    margin-left: 1rem;
+    top: 25%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    /* text-justify: distribute-all-lines; (Removido) */
 }
 
-.recipeList ul li{
-    list-style: none;
-    
+.recipeList h2 {
     color: white;
-    list-style-type:decimal;
+    background-color: #FF006B;
+    border: 10px solid #FF006B;
+    text-align: center;
+}
+
+.recipeList ul {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+
+.recipeList ul li {
+    color: white;
+    background: #090A35;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    list-style-type: decimal;
+}
+
+.recipeList ul li a {
+    text-decoration: none;
+}
+
+.recipeList ul li:hover {
+    color: #FF006B;
+    background-color: #FF006B;
+}
+
+.addRecipe {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 20px;
+}
+
+.detail {
+    position: absolute;
+    top: 80%;
+    right: 50%;
+    transform: translateY(-50%) translateX(50%);
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        width: 20%;
+        font-size: medium; 
+        gap: 10px;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .navbar {
+        width: 40%;
+        font-size: xx-large;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 676px) {
+    .navbar {
+        width: 50%;
+        font-size: x-large;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .recipeList {
+        padding: 5px;
+        transform: scale(90%);
+    }
+
+    .recipeList h2 {
+        font-size: 18px;
+    }
+
+    .recipeList ul li {
+        font-size: 14px;
+        max-width: 140px;
+        margin-bottom: 5px;
+    }
 }

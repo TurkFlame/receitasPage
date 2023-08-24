@@ -21,7 +21,7 @@ function RecipeDetail() {
   }
 
   return (
-    <div>
+    <div className="detail">
       <h2>{recipe.title}</h2>
       <h3>Ingredientes:</h3>
       <p>{recipe.ingredients}</p>

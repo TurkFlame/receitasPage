@@ -1,6 +1,5 @@
-//AddRecipe.js
 import React, { useState } from "react";
-import { addRecipe } from "./api"; // Importe a função addRecipe da API
+import { addRecipe } from "./api";
 
 function AddRecipe({ onAddRecipe }) {
   const [title, setTitle] = useState("");
@@ -11,18 +10,20 @@ function AddRecipe({ onAddRecipe }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crie um objeto que representa a nova receita
+    // Verifique se algum campo está vazio
+    if (!title || !ingredients || !preparation || !url) {
+      alert("Por favor, preencha todos os campos."); // Exibe um alerta se algum campo estiver vazio
+      return;
+    }
+
     const newRecipe = {
       title,
       ingredients,
       preparation,
-      url
+      url,
     };
 
-    // Chame a função addRecipe da API para adicionar a nova receita à matriz recipes
     await addRecipe(newRecipe);
-
-    // Chame a função `onAddRecipe` passada como prop para adicionar a nova receita localmente no estado do componente
     onAddRecipe(newRecipe);
 
     // Limpe os campos do formulário após a adição da receita
@@ -35,7 +36,11 @@ function AddRecipe({ onAddRecipe }) {
   return (
     <div>
       <h2>Adicionar Nova Receita</h2>
-      <form style={{'display': 'flex','align-items': 'center', 'margin':'auto', 'width':'fit-content'}} onSubmit={handleSubmit}>
+      <form
+        style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "auto", width: "fit-content" }}
+        className="addRecipe"
+        onSubmit={handleSubmit}
+      >
         <label>Título:</label>
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
         <label>Ingredientes:</label>

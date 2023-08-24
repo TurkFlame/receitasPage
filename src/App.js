@@ -26,7 +26,7 @@ function App() {
     <div>
       <Router>
         <Header></Header>
-      <DarkVariantExample />
+        <DarkVariantExample />
         <Switch>
           <Route path="/" exact>
             {/* Passe a matriz recipes como prop para RecipeList */}
@@ -37,9 +37,8 @@ function App() {
             <AddRecipe onAddRecipe={handleAddRecipe} />
           </Route>
         </Switch>
-      <RecipeList>
-
-      </RecipeList>
+        <RecipeList>
+        </RecipeList>
       </Router>
     </div>
   );
