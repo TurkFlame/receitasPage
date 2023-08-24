@@ -1,4 +1,4 @@
-//api.js
+
 // Verifica se já existe algo no localStorage para evitar sobrescrever as receitas padrão
 const localStorageRecipes = JSON.parse(localStorage.getItem("recipes"));
 console.log(localStorageRecipes)
@@ -140,7 +140,7 @@ const recipesPadrao = [
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(recipes);
-        }, 100); // Simulando um atraso de 1 segundo para a chamada da API
+        }, 100);
     });
 }
 
@@ -153,7 +153,7 @@ export function addRecipe(newRecipe) {
         const newId = Math.max(...recipes.map((recipe) => recipe.id)) + 1;
         newRecipe.id = newId;
 
-        // Adicione a nova receita à matriz recipes
+        // Adiciona a nova receita à matriz recipes
         recipes.push(newRecipe);
 
         // Atualize o localStorage com as receitas atualizadas

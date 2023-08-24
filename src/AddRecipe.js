@@ -10,9 +10,9 @@ function AddRecipe({ onAddRecipe }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verifique se algum campo está vazio
+    // Verifica se algum campo está vazio
     if (!title || !ingredients || !preparation || !url) {
-      alert("Por favor, preencha todos os campos."); // Exibe um alerta se algum campo estiver vazio
+      alert("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -26,7 +26,7 @@ function AddRecipe({ onAddRecipe }) {
     await addRecipe(newRecipe);
     onAddRecipe(newRecipe);
 
-    // Limpe os campos do formulário após a adição da receita
+    // Limpa os campos do formulário após a adição da receita
     setTitle("");
     setIngredients("");
     setPreparation("");

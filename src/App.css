@@ -82,7 +82,8 @@ nav img {
 }
 
 .navbar i:hover {
-    color: white;
+    color: #00ccff;
+    ;
 }
 
 .navbar {
@@ -149,12 +150,12 @@ nav img {
 }
 
 .recipeList ul li a {
-    text-decoration: none;
+    text-decoration: none;  
 }
 
 .recipeList ul li:hover {
-    color: #FF006B;
-    background-color: #FF006B;
+    color: #00ccff;
+    background-color: #00ccff;
 }
 
 .addRecipe {
