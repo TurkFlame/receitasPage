@@ -1,26 +1,36 @@
-//userAuth 
 import { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where, updateDoc } from "firebase/firestore";
 import { firebaseApp } from "./authFireBase";
-import { useAuth } from "./authFireBase"; // Importe o hook useAuth
-import { useHistory } from "react-router-dom";
+import { useAuth } from "./authFireBase";
 
 export const Authorization = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [editingUser, setEditingUser] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    name: "",
+    email: "",
+  });
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const [users, setUsers] = useState([]);
-  const [isRegistering, setIsRegistering] = useState(true); // Estado para controlar se o usuário está registrando ou fazendo login
+  const [isRegistering, setIsRegistering] = useState(true);
+  const [isLogged, setIsLogged] = useState(false); // Melhorando a gestão da autenticação
 
   const db = getFirestore(firebaseApp);
   const userCollectionRef = collection(db, "users");
-  const auth = useAuth(); // Use o hook useAuth para acessar a autenticação Firebase
-  const history = useHistory(); // Inicialize a variável history
+  const auth = useAuth();
 
-  async function handleAuthentication() {
+  const HandleAuthentication = async () => {
+    const { name, email, password } = formData;
+
     if (isRegistering) {
-      // Registro de usuário
-      // Verifica se o email já existe no banco de dados
+      // Validação de formulário pode ser adicionada aqui
+
       const userExistsQuery = query(
         userCollectionRef,
         where("email", "==", email)
@@ -32,7 +42,6 @@ export const Authorization = () => {
         return;
       }
 
-      // Cria o novo usuário com senha
       await addDoc(userCollectionRef, {
         name,
         email,
@@ -41,8 +50,8 @@ export const Authorization = () => {
 
       alert("Usuário registrado com sucesso!");
     } else {
-      // Login de usuário
-      // Verifica se o email e a senha correspondem a uma conta existente
+      // Validação de formulário pode ser adicionada aqui
+
       const userQuery = query(
         userCollectionRef,
         where("email", "==", email),
@@ -53,28 +62,67 @@ export const Authorization = () => {
       if (userSnapshot.empty) {
         alert("Credenciais inválidas. Verifique seu email e senha.");
       } else {
+        setIsLogged(true); // Atualize o estado de autenticação
         alert("Login bem-sucedido!");
-        // Redirecionar para a página desejada após o login bem-sucedido
-        history.push("/");
       }
     }
 
-    // Limpa os campos após o registro ou login
-    setName("");
-    setEmail("");
-    setPassword("");
-  }
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+    });
+  };
 
-  // Função para deletar um usuário
-  async function deleteUser(id) {
+  const startEditingUser = (user) => {
+    setEditingUser(user.id);
+    setEditFormData({
+      name: user.name,
+      email: user.email,
+    });
+  };
+
+  const updateUser = async (id) => {
+    const userDoc = doc(db, "users", id);
+    await updateDoc(userDoc, {
+      name: editFormData.name,
+      email: editFormData.email,
+    });
+
+    setEditingUser(null);
+    setEditFormData({
+      name: "",
+      email: "",
+    });
+
+    getUsers();
+  };
+
+  const cancelEditUser = () => {
+    setEditingUser(null);
+    setEditFormData({
+      name: "",
+      email: "",
+    });
+  };
+
+
+  const deleteUser = async (id) => {
     const userDoc = doc(db, "users", id);
     await deleteDoc(userDoc);
-    // Recarrega a lista de usuários após a exclusão
-    getUsers();
-  }
 
-  // Função para buscar e definir a lista de usuários
-  async function getUsers() {
+    if (editingUser === id) {
+      setEditingUser(null);
+      setEditFormData({
+        name: "",
+        email: "",
+      });
+    }
+
+    getUsers();
+  };
+
+  const getUsers = async () => {
     try {
       const querySnapshot = await getDocs(userCollectionRef);
       const usersData = querySnapshot.docs.map((doc) => ({
@@ -85,47 +133,34 @@ export const Authorization = () => {
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const querySnapshot = await getDocs(userCollectionRef);
-        const usersData = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setUsers(usersData);
-      } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
-      }
-    };
-  
     getUsers();
-  }, [userCollectionRef]);
-  
+  }, []);
+
   return (
     <div>
       <h2>{isRegistering ? "Registrar" : "Login"}</h2>
       <input
         type="text"
         placeholder="Nome"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
       ></input>
       <input
         type="text"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       ></input>
       <input
         type="password"
         placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
       ></input>
-      <button onClick={handleAuthentication}>
+      <button onClick={HandleAuthentication}>
         {isRegistering ? "Registrar" : "Login"}
       </button>
       <p onClick={() => setIsRegistering(!isRegistering)}>
@@ -134,19 +169,45 @@ export const Authorization = () => {
           : "Não tem uma conta? Registre-se aqui."}
       </p>
       <ul>
-        {auth.currentUser && auth.currentUser.email === "luizfelipemarcondesdelima@gmail.com" ? (
-          users.map((user) => (
-            <div key={user.id}>
-              <li>{user.name}</li>
-              <li>{user.email}</li>
-              <button onClick={() => deleteUser(user.id)}>Deletar</button>
+        <ul>
+          {users.map((userData) => (
+            <div key={userData.id}>
+              {editingUser === userData.id ? (
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    value={editFormData.name}
+                    onChange={(e) =>
+                      setEditFormData({ ...editFormData, name: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    value={editFormData.email}
+                    onChange={(e) =>
+                      setEditFormData({ ...editFormData, email: e.target.value })
+                    }
+                  />
+                  <button onClick={() => updateUser(userData.id)}>Salvar</button>
+                  <button onClick={() => cancelEditUser()}>Cancelar</button>
+                </div>
+              ) : (
+                <div>
+                  <li>{userData.name}</li>
+                  <li>{userData.email}</li>
+                  <button onClick={() => deleteUser(userData.id)}>Deletar</button>
+                  <button onClick={() => startEditingUser(userData)}>Editar</button>
+                </div>
+              )}
             </div>
-          ))
-        ) : (
-          // Exibe uma mensagem se o usuário não estiver autenticado ou não tiver o email desejado
-          <p>Você não tem permissão para ver os detalhes dos usuários.</p>
-        )}
+          ))}
+        </ul>
+
       </ul>
     </div>
   );
 };
+
+export default Authorization;
