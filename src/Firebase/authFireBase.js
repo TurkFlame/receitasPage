@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -14,6 +14,11 @@ const firebaseConfig = {
   measurementId: "G-ZBQSDCC1ST"
 };
 
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-export default firebaseApp
+// Inicialize o app Firebase
+export const firebaseApp = initializeApp(firebaseConfig);
+
+// Exporte o hook useAuth
+export const useAuth = () => {
+  const auth = getAuth(firebaseApp);
+  return auth;
+};

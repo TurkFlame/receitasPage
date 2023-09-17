@@ -1,15 +1,9 @@
+//userAuth 
 import { useState, useEffect } from "react";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  deleteDoc,
-  query,
-  where,
-} from "firebase/firestore";
-import firebaseApp from "./authFireBase";
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where } from "firebase/firestore";
+import { firebaseApp } from "./authFireBase";
+import { useAuth } from "./authFireBase"; // Importe o hook useAuth
+import { useHistory } from "react-router-dom";
 
 export const Authorization = () => {
   const [name, setName] = useState("");
@@ -20,6 +14,8 @@ export const Authorization = () => {
 
   const db = getFirestore(firebaseApp);
   const userCollectionRef = collection(db, "users");
+  const auth = useAuth(); // Use o hook useAuth para acessar a autenticação Firebase
+  const history = useHistory(); // Inicialize a variável history
 
   async function handleAuthentication() {
     if (isRegistering) {
@@ -58,7 +54,8 @@ export const Authorization = () => {
         alert("Credenciais inválidas. Verifique seu email e senha.");
       } else {
         alert("Login bem-sucedido!");
-        // Você pode redirecionar o usuário para outra página após o login
+        // Redirecionar para a página desejada após o login bem-sucedido
+        history.push("/");
       }
     }
 
@@ -66,6 +63,28 @@ export const Authorization = () => {
     setName("");
     setEmail("");
     setPassword("");
+  }
+
+  // Função para deletar um usuário
+  async function deleteUser(id) {
+    const userDoc = doc(db, "users", id);
+    await deleteDoc(userDoc);
+    // Recarrega a lista de usuários após a exclusão
+    getUsers();
+  }
+
+  // Função para buscar e definir a lista de usuários
+  async function getUsers() {
+    try {
+      const querySnapshot = await getDocs(userCollectionRef);
+      const usersData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUsers(usersData);
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+    }
   }
 
   useEffect(() => {
@@ -81,14 +100,10 @@ export const Authorization = () => {
         console.error("Erro ao buscar usuários:", error);
       }
     };
+  
     getUsers();
-  }, []);
-
-  async function deleteUser(id) {
-    const userDoc = doc(db, "users", id);
-    await deleteDoc(userDoc);
-  }
-
+  }, [userCollectionRef]);
+  
   return (
     <div>
       <h2>{isRegistering ? "Registrar" : "Login"}</h2>
@@ -119,13 +134,18 @@ export const Authorization = () => {
           : "Não tem uma conta? Registre-se aqui."}
       </p>
       <ul>
-        {users.map((user) => (
-          <div key={user.id}>
-            <li>{user.name}</li>
-            <li>{user.email}</li>
-            <button onClick={() => deleteUser(user.id)}>Deletar</button>
-          </div>
-        ))}
+        {auth.currentUser && auth.currentUser.email === "luizfelipemarcondesdelima@gmail.com" ? (
+          users.map((user) => (
+            <div key={user.id}>
+              <li>{user.name}</li>
+              <li>{user.email}</li>
+              <button onClick={() => deleteUser(user.id)}>Deletar</button>
+            </div>
+          ))
+        ) : (
+          // Exibe uma mensagem se o usuário não estiver autenticado ou não tiver o email desejado
+          <p>Você não tem permissão para ver os detalhes dos usuários.</p>
+        )}
       </ul>
     </div>
   );
