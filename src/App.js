@@ -6,6 +6,7 @@ import RecipeDetail from "./RecipeDetail";
 import AddRecipe from "./AddRecipe";
 import "./App.css";
 import Header from "./header";
+import { Authorization } from "./Firebase/userAuth";
 
 function App() {
   // Usa o localStorage para obter as receitas ou inicialize com um array vazio
@@ -28,12 +29,14 @@ function App() {
         <DarkVariantExample />
         <Switch>
           <Route path="/" exact>
+            <Authorization />
             <RecipeList recipes={recipes} />
           </Route>
           <Route path="/recipe/:id" component={RecipeDetail} />
           <Route path="/add">
             <AddRecipe onAddRecipe={handleAddRecipe} />
           </Route>
+
         </Switch>
         <RecipeList>
         </RecipeList>

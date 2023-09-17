@@ -33,7 +33,7 @@ function App() {
   const adjustedIndex = adjustIndex(activeIndex);
 
   return (
-    <div className="carrouselElements" style={{'display': 'flex','align-items': 'center', 'margin':'auto', 'width':'fit-content'}}>
+    <div className="carrouselElements" style={{'display': 'flex','alignItems': 'center', 'margin':'auto', 'width':'fit-content'}}>
       <h2><strong>Carrossel</strong> de Receitas</h2>
       <Carousel
         activeIndex={adjustedIndex}

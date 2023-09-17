@@ -10,22 +10,22 @@ function Header() {
         </Link>
         <div className="navbar">
           <Link to="/">
-            <i class="fa-solid fa-house"></i>
+            <i className="fa-solid fa-house"></i>
           </Link>
           <Link to="/">
-            <i class="fa-solid fa-wine-glass"></i>
+            <i className="fa-solid fa-wine-glass"></i>
           </Link>
           <Link to="/">
-            <i class="fa-solid fa-utensils"></i>
+            <i className="fa-solid fa-utensils"></i>
           </Link>
           <Link to="/">
-            <i class="fa-solid fa-burger"></i>
+            <i className="fa-solid fa-burger"></i>
           </Link>
           <Link to="/add">
-            <i class="fa-solid fa-plus"></i>
+            <i className="fa-solid fa-plus"></i>
           </Link>
           <Link to="/">
-            <i class="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
           </Link>
         </div>
       </nav>
