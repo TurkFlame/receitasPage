@@ -140,21 +140,24 @@ export const Authorization = () => {
   }, []);
 
   return (
-    <div>
+    <div className="formLogin">
       <h2>{isRegistering ? "Registrar" : "Login"}</h2>
-      <input
+      <p>Nome</p>
+      <input className="inputLogin"
         type="text"
         placeholder="Nome"
         value={formData.name}
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
       ></input>
-      <input
+      <p>Email</p>
+      <input className="inputLogin"
         type="text"
         placeholder="Email"
         value={formData.email}
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
       ></input>
-      <input
+      <p>Senha</p>
+      <input className="inputLogin"
         type="password"
         placeholder="Senha"
         value={formData.password}
@@ -168,7 +171,7 @@ export const Authorization = () => {
           ? "Já tem uma conta? Faça login aqui."
           : "Não tem uma conta? Registre-se aqui."}
       </p>
-      <ul>
+      <ul className="userForm">
         <ul>
           {users.map((userData) => (
             <div key={userData.id}>

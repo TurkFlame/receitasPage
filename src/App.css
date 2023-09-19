@@ -57,7 +57,7 @@ body {
     list-style: none;
 }
 
-.smaller-image + .carousel-caption h3 {
+.smaller-image+.carousel-caption h3 {
     color: #fff;
     padding: 5px;
 }
@@ -78,7 +78,7 @@ nav img {
 
 .navbar i {
     color: rgba(7, 8, 47, 0.65);
-    transition: all 0.6s;
+    transition: all 0.2s;
 }
 
 .navbar i:hover {
@@ -150,7 +150,7 @@ nav img {
 }
 
 .recipeList ul li a {
-    text-decoration: none;  
+    text-decoration: none;
 }
 
 .recipeList ul li:hover {
@@ -179,7 +179,7 @@ nav img {
 @media screen and (max-width: 768px) {
     .navbar {
         width: 20%;
-        font-size: medium; 
+        font-size: medium;
         gap: 10px;
         height: auto;
     }
@@ -216,4 +216,89 @@ nav img {
         max-width: 140px;
         margin-bottom: 5px;
     }
+}
+
+.add-recipe-container {
+    background-color: #00ccff;
+}
+.form-add-recipes {
+    all: unset;
+    margin-top: 1vh;
+    background-color: rgba(7, 8, 47, 0.2);
+    display: inline-flex;
+    flex-direction: column;
+    padding: 10px;
+    color: rgba(7, 8, 47, 1);
+}
+
+input,textarea{
+    all: unset;
+    outline: 1px solid #090A35;
+    background-color: bisque;
+    max-width: 50%;
+}
+
+input:focus,
+textarea:focus {
+    all: unset;
+    outline: 1px solid #090A35;
+    background-color: rgba(7, 8, 47, 0.65);
+    color: white;
+}
+
+.random-recipe {
+    max-width: 50%;
+    background-color: rgba(7, 8, 47, 0.2);
+    color: rgba(7, 8, 47, 1);
+    padding: 10px;
+    padding-bottom: 30px;
+    right: 50%;
+    transform: translateX(50%);
+    border-radius: 10px;
+}
+
+.buttonFormated{
+    all: unset;
+    outline: 2px solid #090A35;
+    padding: 5px;
+    color: #090A35;
+    border-radius: 5px;
+    background-color: bisque;
+    font-weight: bold;
+}
+
+.buttonFormated:hover{
+    color: bisque;
+    cursor: pointer;
+    background-color: #090A35;
+}
+
+.recipe-image {
+    border-radius: 5px;
+}
+
+.formLogin{
+    margin-top:40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #090A35;
+    padding: 50px;
+    height: 100%;
+    width: 200%;
+    color: white;
+}
+
+.userForm{
+    padding-top: 30px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    right: 50%;
+}
+
+ul{
+    list-style-type: none;
 }
