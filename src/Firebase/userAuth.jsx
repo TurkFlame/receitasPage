@@ -1,10 +1,17 @@
+//userAuth
 import { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where, updateDoc } from "firebase/firestore";
 import { firebaseApp } from "./authFireBase";
+import { AuthProvider, useAuth} from './AuthContext';
+
 
 export const Authorization = () => {
+  console.log("userAuth ativado")
+  const context = useAuth()
+  const { state, dispatch } = AuthProvider(context);
+  console.log("oq é o disptach", dispatch)
   document.body.id = "bodyLogin";
-  
+
   const [editingUser, setEditingUser] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
@@ -64,6 +71,8 @@ export const Authorization = () => {
       } else {
         setIsLogged(true); // Atualize o estado de autenticação
         alert("Login bem-sucedido!");
+        dispatch({ type: 'LOGIN' });
+        window.location.href = window.location.origin
       }
     }
 
@@ -140,76 +149,78 @@ export const Authorization = () => {
   }, []);
 
   return (
-    <div className="formLogin">
-      <h2>{isRegistering ? "Registrar" : "Login"}</h2>
-      <p>Nome</p>
-      <input className="inputLogin"
-        type="text"
-        placeholder="Nome"
-        value={formData.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-      ></input>
-      <p>Email</p>
-      <input className="inputLogin"
-        type="text"
-        placeholder="Email"
-        value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      ></input>
-      <p>Senha</p>
-      <input className="inputLogin"
-        type="password"
-        placeholder="Senha"
-        value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-      ></input>
-      <button onClick={HandleAuthentication}>
-        {isRegistering ? "Registrar" : "Login"}
-      </button>
-      <p onClick={() => setIsRegistering(!isRegistering)}>
-        {isRegistering
-          ? "Já tem uma conta? Faça login aqui."
-          : "Não tem uma conta? Registre-se aqui."}
-      </p>
-      <ul className="userForm">
-        <ul>
-          {users.map((userData) => (
-            <div key={userData.id}>
-              {editingUser === userData.id ? (
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Nome"
-                    value={editFormData.name}
-                    onChange={(e) =>
-                      setEditFormData({ ...editFormData, name: e.target.value })
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="Email"
-                    value={editFormData.email}
-                    onChange={(e) =>
-                      setEditFormData({ ...editFormData, email: e.target.value })
-                    }
-                  />
-                  <button onClick={() => updateUser(userData.id)}>Salvar</button>
-                  <button onClick={() => cancelEditUser()}>Cancelar</button>
-                </div>
-              ) : (
-                <div>
-                  <li>{userData.name}</li>
-                  <li>{userData.email}</li>
-                  <button onClick={() => deleteUser(userData.id)}>Deletar</button>
-                  <button onClick={() => startEditingUser(userData)}>Editar</button>
-                </div>
-              )}
-            </div>
-          ))}
-        </ul>
+    <AuthProvider>
+      <form className="formLogin">
+        <h2>{isRegistering ? "Registrar" : "Login"}</h2>
+        <p>Nome</p>
+        <input className="inputLogin"
+          type="text"
+          placeholder="Nome"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        ></input>
+        <p>Email</p>
+        <input className="inputLogin"
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        ></input>
+        <p>Senha</p>
+        <input className="inputLogin"
+          type="password"
+          placeholder="Senha"
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        ></input>
+        <button onClick={HandleAuthentication}>
+          {isRegistering ? "Registrar" : "Login"}
+        </button>
+        <p onClick={() => setIsRegistering(!isRegistering)}>
+          {isRegistering
+            ? "Já tem uma conta? Faça login aqui."
+            : "Não tem uma conta? Registre-se aqui."}
+        </p>
+        <ul className="userForm">
+          <ul>
+            {users.map((userData) => (
+              <div key={userData.id}>
+                {editingUser === userData.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Nome"
+                      value={editFormData.name}
+                      onChange={(e) =>
+                        setEditFormData({ ...editFormData, name: e.target.value })
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Email"
+                      value={editFormData.email}
+                      onChange={(e) =>
+                        setEditFormData({ ...editFormData, email: e.target.value })
+                      }
+                    />
+                    <button onClick={() => updateUser(userData.id)}>Salvar</button>
+                    <button onClick={() => cancelEditUser()}>Cancelar</button>
+                  </div>
+                ) : (
+                  <div>
+                    <li>{userData.name}</li>
+                    <li>{userData.email}</li>
+                    <button onClick={() => deleteUser(userData.id)}>Deletar</button>
+                    <button onClick={() => startEditingUser(userData)}>Editar</button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </ul>
 
-      </ul>
-    </div>
+        </ul>
+      </form>
+    </AuthProvider>
   );
 };
 
