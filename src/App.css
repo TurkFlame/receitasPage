@@ -1,39 +1,56 @@
+/* Reset de margens para todos os elementos */
 * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Estilo para o corpo com ID bodyLogin */
+#bodyLogin {
+    background: linear-gradient(90deg, rgba(255, 0, 243, 1) 0%, rgba(65, 6, 163, 1) 36%, rgba(6, 16, 166, 1) 55%, rgba(6, 16, 166, 1) 70%, rgba(0, 212, 255, 1) 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
+/* Estilo para o corpo principal (body) */
 body {
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: white;
     text-align: center;
 }
 
+/* Estilo para o container do carrossel */
 .carousel-container {
     display: flex;
     flex-direction: row;
     gap: 20px;
     position: relative;
     align-items: center;
-    /* margin-top: 0; (Ajuste de acordo com suas necessidades) */
+    margin-top: 0; /* Ajuste de acordo com suas necessidades */
     transition: margin-top 0.3s ease-in-out;
 }
 
+/* Estilo para imagens do carrossel */
 .carousel-container img {
     max-width: 100%;
     height: auto;
 }
 
+/* Estilo para imagem maior */
 .larger-image {
     width: 400px;
     border-radius: 10px;
     height: 266px;
 }
 
+/* Estilo para imagem menor */
 .smaller-image {
     border-radius: 15px;
     width: 250px;
@@ -41,6 +58,7 @@ body {
     filter: blur(3px);
 }
 
+/* Estilo para a legenda do carrossel */
 .carousel-caption h3 {
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
@@ -52,16 +70,19 @@ body {
     left: 0;
 }
 
+/* Estilo para lista de receitas */
 .recipeList ul {
     position: relative;
     list-style: none;
 }
 
+/* Estilo para a legenda do carrossel menor */
 .smaller-image+.carousel-caption h3 {
     color: #fff;
     padding: 5px;
 }
 
+/* Estilo para a barra de navegação (navbar) */
 nav {
     width: 100vw;
     height: 6.1875rem;
@@ -71,21 +92,24 @@ nav {
     border-bottom: 1rem solid #FF006B;
 }
 
+/* Estilo para a imagem do logotipo na barra de navegação */
 nav img {
     position: relative;
     top: -0.4rem;
 }
 
+/* Estilo para ícones na barra de navegação */
 .navbar i {
     color: rgba(7, 8, 47, 0.65);
     transition: all 0.2s;
 }
 
+/* Efeito hover para ícones na barra de navegação */
 .navbar i:hover {
     color: #00ccff;
-    ;
 }
 
+/* Estilo para a barra de navegação propriamente dita */
 .navbar {
     background: #FF006B;
     width: 30%;
@@ -98,6 +122,7 @@ nav img {
     font-size: xxx-large;
     z-index: 1;
 }
+
 
 .carrouselElements {
     display: flex;
@@ -220,85 +245,118 @@ nav img {
 
 .add-recipe-container {
     background-color: #00ccff;
-}
-.form-add-recipes {
-    all: unset;
-    margin-top: 1vh;
-    background-color: rgba(7, 8, 47, 0.2);
-    display: inline-flex;
-    flex-direction: column;
-    padding: 10px;
-    color: rgba(7, 8, 47, 1);
+    padding: 20px;
+    border-radius: 10px;
 }
 
-input,textarea{
-    all: unset;
-    outline: 1px solid #090A35;
+/* Formulário de adição de receitas */
+.form-add-recipes {
+    background-color: rgba(7, 8, 47, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: rgba(7, 8, 47, 1);
+    border-radius: 10px;
+    margin-top: 1vh;
+}
+
+/* Estilização para campos de entrada de texto */
+input, textarea {
     background-color: bisque;
     max-width: 50%;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px 0;
 }
 
-input:focus,
-textarea:focus {
-    all: unset;
-    outline: 1px solid #090A35;
+/* Estilização para campos de entrada de texto quando focados */
+input:focus, textarea:focus {
     background-color: rgba(7, 8, 47, 0.65);
     color: white;
+    outline: none;
 }
 
+/* Caixa de exibição de receita aleatória */
 .random-recipe {
-    max-width: 50%;
     background-color: rgba(7, 8, 47, 0.2);
     color: rgba(7, 8, 47, 1);
     padding: 10px;
     padding-bottom: 30px;
-    right: 50%;
-    transform: translateX(50%);
+    width: 50%;
+    margin: 0 auto;
     border-radius: 10px;
 }
 
-.buttonFormated{
-    all: unset;
-    outline: 2px solid #090A35;
-    padding: 5px;
+/* Botão formatado */
+.buttonFormated {
+    padding: 10px 20px;
     color: #090A35;
     border-radius: 5px;
     background-color: bisque;
     font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.buttonFormated:hover{
+/* Efeito hover para o botão */
+.buttonFormated:hover {
     color: bisque;
-    cursor: pointer;
     background-color: #090A35;
 }
 
+/* Imagem da receita */
 .recipe-image {
     border-radius: 5px;
+    max-width: 100%;
+    height: auto;
 }
 
-.formLogin{
-    margin-top:40px;
+/* Formulário de login */
+.formLogin {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #090A35;
+    background-color: white;
     padding: 50px;
-    height: 100%;
-    width: 200%;
-    color: white;
+    color: rgba(7, 8, 47, 1);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.userForm{
+/* Lista de usuários */
+.userForm {
     padding-top: 30px;
     list-style: none;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: start;
-    right: 50%;
+    justify-content: center;
 }
 
-ul{
+/* Estilo para lista não ordenada */
+ul {
     list-style-type: none;
+    padding: 0;
+}
+
+/* Botão genérico com gradiente */
+button {
+    background: linear-gradient(90deg, rgba(255, 0, 243, 1) 0%, rgba(0, 212, 255, 1) 100%);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+/* Efeito hover para o botão */
+button:hover {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%, rgba(255, 0, 243, 1) 100%);
+    color: #fff;
 }

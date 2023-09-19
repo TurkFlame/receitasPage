@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where, updateDoc } from "firebase/firestore";
 import { firebaseApp } from "./authFireBase";
-import { useAuth } from "./authFireBase";
 
 export const Authorization = () => {
+  document.body.id = "bodyLogin";
+  
   const [editingUser, setEditingUser] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
@@ -23,7 +24,6 @@ export const Authorization = () => {
 
   const db = getFirestore(firebaseApp);
   const userCollectionRef = collection(db, "users");
-  const auth = useAuth();
 
   const HandleAuthentication = async () => {
     const { name, email, password } = formData;
