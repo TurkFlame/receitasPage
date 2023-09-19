@@ -2,14 +2,13 @@
 import { useState, useEffect } from "react";
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where, updateDoc } from "firebase/firestore";
 import { firebaseApp } from "./authFireBase";
-import { AuthProvider, useAuth} from './AuthContext';
+import { useAuth, initialState} from './AuthContext';
 
 
 export const Authorization = () => {
-  console.log("userAuth ativado")
+  console.log("Entrou Authorization")
   const context = useAuth()
-  const { state, dispatch } = AuthProvider(context);
-  console.log("oq é o disptach", dispatch)
+  const { state, dispatch } = useAuth()
   document.body.id = "bodyLogin";
 
   const [editingUser, setEditingUser] = useState(null);
@@ -59,20 +58,20 @@ export const Authorization = () => {
     } else {
       // Validação de formulário pode ser adicionada aqui
 
+
       const userQuery = query(
         userCollectionRef,
         where("email", "==", email),
         where("password", "==", password)
       );
       const userSnapshot = await getDocs(userQuery);
-
+  
       if (userSnapshot.empty) {
         alert("Credenciais inválidas. Verifique seu email e senha.");
       } else {
-        setIsLogged(true); // Atualize o estado de autenticação
-        alert("Login bem-sucedido!");
         dispatch({ type: 'LOGIN' });
-        window.location.href = window.location.origin
+        alert("Login bem-sucedido!");
+        window.location.href = window.location.origin;
       }
     }
 
@@ -149,7 +148,6 @@ export const Authorization = () => {
   }, []);
 
   return (
-    <AuthProvider>
       <form className="formLogin">
         <h2>{isRegistering ? "Registrar" : "Login"}</h2>
         <p>Nome</p>
@@ -220,7 +218,6 @@ export const Authorization = () => {
 
         </ul>
       </form>
-    </AuthProvider>
   );
 };
 
