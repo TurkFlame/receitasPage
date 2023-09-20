@@ -7,13 +7,12 @@ export const LogOut = () => {
   const { state, dispatch } = useAuth(); // Corrigido: state estava faltando aqui
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' });
+    window.location.href = "/login"
   };
 
   return (
     <form>
-        <button onClick={handleLogout}>
-          Logout
-        </button>
+        <i class="fa-solid fa-right-from-bracket" onClick={handleLogout}></i>
     </form>
   );
 }

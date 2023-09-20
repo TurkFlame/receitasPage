@@ -1,21 +1,16 @@
-// App.js
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DarkVariantExample from "./carousel";
 import RecipeList from "./RecipeList";
 import RecipeDetail from "./RecipeDetail";
 import AddRecipe from "./AddRecipe";
-import "./App.css";
 import Header from "./header";
 import { Authorization } from "./Firebase/userAuth";
-import { useAuth, initialState } from "./Firebase/AuthContext";
 
 function App() {
-  const { state } = useAuth();
-  const { isLogged } = state || initialState;
-  console.log(isLogged)
-  
-  const [recipes, setRecipes] = useState(JSON.parse(localStorage.getItem("recipes")) || []);
+  const [recipes, setRecipes] = useState(
+    JSON.parse(localStorage.getItem("recipes")) || []
+  );
 
   const handleAddRecipe = (newRecipe) => {
     setRecipes([...recipes, newRecipe]);
@@ -30,15 +25,9 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact>
-            {isLogged ? (
-              <>
-                <Header />
-                <RecipeList recipes={recipes} />
-                <DarkVariantExample />
-              </>
-            ) : (
-              <Redirect to="/login" />
-            )}
+            <Header />
+            <RecipeList recipes={recipes} />
+            <DarkVariantExample />
           </Route>
           <Route path="/recipe/:id" component={RecipeDetail} />
           <Route path="/add">

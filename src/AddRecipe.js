@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { addRecipe } from "./api";
 
+// Função para limpar o HTML de um texto
 function cleanHtml(html) {
   var div = document.createElement("div");
   div.innerHTML = html;
@@ -8,13 +9,16 @@ function cleanHtml(html) {
 }
 
 function AddRecipe({ onAddRecipe }) {
+  // Estados para os campos do formulário
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [preparation, setPreparation] = useState("");
   const [url, setUrl] = useState("");
   const [randomRecipe, setRandomRecipe] = useState(null);
 
+  // Função para buscar uma receita aleatória da API
   const fetchRandomRecipe = async () => {
+    // Configurações para a requisição à API
     const url =
       "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?tags=vegetarian%2Cdessert&number=1";
     const options = {
@@ -28,6 +32,7 @@ function AddRecipe({ onAddRecipe }) {
     };
 
     try {
+      // Realiza a requisição
       const response = await fetch(url, options);
       const data = await response.json();
       const recipe = data.recipes[0];
@@ -35,7 +40,7 @@ function AddRecipe({ onAddRecipe }) {
       // Limpa o HTML das instruções
       const cleanedInstructions = cleanHtml(recipe.instructions);
 
-      // Atualize o estado com os campos corretos
+      // Atualiza o estado com os campos da receita aleatória
       setRandomRecipe({
         title: recipe.title,
         ingredients: recipe.extendedIngredients.map(
@@ -49,6 +54,7 @@ function AddRecipe({ onAddRecipe }) {
     }
   };
 
+  // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,6 +64,7 @@ function AddRecipe({ onAddRecipe }) {
       return;
     }
 
+    // Cria um objeto com os dados da nova receita
     const newRecipe = {
       title,
       ingredients,
@@ -65,7 +72,7 @@ function AddRecipe({ onAddRecipe }) {
       url,
     };
 
-    // Adiciona a nova receita à lista
+    // Adiciona a nova receita à lista e chama a função de callback
     await addRecipe(newRecipe);
     onAddRecipe(newRecipe);
 

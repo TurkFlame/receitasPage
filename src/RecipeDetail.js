@@ -1,4 +1,3 @@
-//RecipeDetail
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getRecipes } from "./api";
@@ -27,6 +26,7 @@ function RecipeDetail() {
       <p>{recipe.ingredients}</p>
       <h3>Modo de Preparo:</h3>
       <p>{recipe.preparation}</p>
+      <img src={recipe.url} alt={recipe.title} width="1000px" height="600px"/>
     </div>
   );
 }

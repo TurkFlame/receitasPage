@@ -1,22 +1,32 @@
-//userAuth
 import { useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc, query, where, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  deleteDoc,
+  query,
+  where,
+  updateDoc,
+} from "firebase/firestore";
 import { firebaseApp } from "./authFireBase";
-import { useAuth, initialState} from './AuthContext';
-
+import { useAuth, initialState } from './AuthContext';
 
 export const Authorization = () => {
-  console.log("Entrou Authorization")
-  const context = useAuth()
-  const { state, dispatch } = useAuth()
+  // Usando o contexto de autenticação
+  const context = useAuth();
+  const { state, dispatch } = useAuth();
+
+  // Define o ID do corpo do documento HTML
   document.body.id = "bodyLogin";
 
+  // Estados para gerenciar dados do formulário
   const [editingUser, setEditingUser] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
     email: "",
   });
-
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,19 +34,21 @@ export const Authorization = () => {
     password: "",
   });
 
+  // Estado para armazenar dados dos usuários
   const [users, setUsers] = useState([]);
   const [isRegistering, setIsRegistering] = useState(true);
-  const [isLogged, setIsLogged] = useState(false); // Melhorando a gestão da autenticação
 
+  // Conexão com o Firestore
   const db = getFirestore(firebaseApp);
   const userCollectionRef = collection(db, "users");
 
-  const HandleAuthentication = async () => {
+  // Manipulador de autenticação
+  const HandleAuthentication = async (e) => {
+    e.preventDefault();
     const { name, email, password } = formData;
 
     if (isRegistering) {
-      // Validação de formulário pode ser adicionada aqui
-
+      // Registro de usuário
       const userExistsQuery = query(
         userCollectionRef,
         where("email", "==", email)
@@ -56,16 +68,14 @@ export const Authorization = () => {
 
       alert("Usuário registrado com sucesso!");
     } else {
-      // Validação de formulário pode ser adicionada aqui
-
-
+      // Login de usuário
       const userQuery = query(
         userCollectionRef,
         where("email", "==", email),
         where("password", "==", password)
       );
       const userSnapshot = await getDocs(userQuery);
-  
+
       if (userSnapshot.empty) {
         alert("Credenciais inválidas. Verifique seu email e senha.");
       } else {
@@ -75,6 +85,7 @@ export const Authorization = () => {
       }
     }
 
+    // Limpa os campos do formulário após a ação
     setFormData({
       name: "",
       email: "",
@@ -82,6 +93,7 @@ export const Authorization = () => {
     });
   };
 
+  // Funções para edição, atualização e exclusão de usuários
   const startEditingUser = (user) => {
     setEditingUser(user.id);
     setEditFormData({
@@ -114,7 +126,6 @@ export const Authorization = () => {
     });
   };
 
-
   const deleteUser = async (id) => {
     const userDoc = doc(db, "users", id);
     await deleteDoc(userDoc);
@@ -130,6 +141,7 @@ export const Authorization = () => {
     getUsers();
   };
 
+  // Função para buscar dados dos usuários no Firestore
   const getUsers = async () => {
     try {
       const querySnapshot = await getDocs(userCollectionRef);
@@ -143,28 +155,27 @@ export const Authorization = () => {
     }
   };
 
+  // Carrega dados dos usuários quando o componente é montado
   useEffect(() => {
     getUsers();
   }, []);
 
   return (
+    <div>
       <form className="formLogin">
         <h2>{isRegistering ? "Registrar" : "Login"}</h2>
-        <p>Nome</p>
         <input className="inputLogin"
           type="text"
           placeholder="Nome"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         ></input>
-        <p>Email</p>
         <input className="inputLogin"
           type="email"
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         ></input>
-        <p>Senha</p>
         <input className="inputLogin"
           type="password"
           placeholder="Senha"
@@ -215,9 +226,9 @@ export const Authorization = () => {
               </div>
             ))}
           </ul>
-
         </ul>
       </form>
+    </div>
   );
 };
 
